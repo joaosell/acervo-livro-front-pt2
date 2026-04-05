@@ -1,35 +1,19 @@
-import { Button, Table, Typography } from "antd";
-import { useState } from "react";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Livros from "./pages/Livros";
+// import Layout from "./ccomponents/Layout";
 function App() {
-  const [editoras, setEditoras] = useState([]);
-
-  const handleClick = async () => {
-    const response = await fetch("http://localhost:3000/editoras");
-    const data = await response.json();
-    setEditoras(data);
-  };
-  const columns = [
-    {
-      title: "Nome",
-      dataIndex: "nome",
-      key: "nome",
-    },
-    {
-      title: "Cidade",
-      dataIndex: "cidade",
-      key: "cidade",
-    },
-  ];
-
   return (
-    <>
-      <Typography.Title>Acervo de livros</Typography.Title>
-      <Typography>Clique aqui para mostrar todas as editoras</Typography>
-      <Button onClick={handleClick}>mostrar</Button>
-      <Table dataSource={editoras} columns={columns} />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        {/* <Route element={<Layout />}> */}
+        <Route path="/livros" element={<Livros />} />
+        {/* <Route path="/emprestimos" element={<Emprestimos />} /> */}
+        {/* <Route path="/configuracoes" element={<Configuracoes />} /> */}
+        {/* </Route> */}
+      </Routes>
+    </BrowserRouter>
   );
 }
-
 export default App;
