@@ -4,6 +4,8 @@ import Livros from "./pages/Livros";
 import Layout from "./components/Layout";
 import Emprestimos from "./pages/Emprestimos";
 import Configuracoes from "./pages/Configuracoes";
+import Categorias from "./pages/Categorias";
+
 function App() {
   return (
     <BrowserRouter>
@@ -11,8 +13,14 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route element={<Layout />}>
           <Route path="/livros" element={<Livros />} />
+          <Route path="/livros/editar" element={<div>Editar Livros</div>} />
           <Route path="/emprestimos" element={<Emprestimos />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
+          <Route path="/categorias" element={<Categorias />} />
+          <Route path="/editoras" element={<div>Editoras</div>} />
+          <Route path="/usuarios" element={<div>Usuários</div>} />
+          <Route path="/autores" element={<div>Autores</div>} />
+          <Route path="/exemplares" element={<div>Exemplares</div>} />
         </Route>
       </Routes>
     </BrowserRouter>
