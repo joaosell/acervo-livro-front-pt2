@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const botoes = [
   { label: "Adicionar Livro", rota: "/livros/editar" },
-  { label: "Acessar Categorias", rota: "/categorias" },
+  { label: "Categorias", rota: "/categorias" },
   { label: "Acessar Editoras", rota: "/editoras" },
   { label: "Acessar Usuários", rota: "/usuarios" },
   { label: "Acessar Autores", rota: "/autores" },

@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
-import { Button, Form, Input, Modal, Table, Typography } from "antd";
+import { Button, Col, Form, Input, Modal, Row, Table, Typography } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { categoriaService } from "../../services/categoriaService";
 
 interface Categoria {
   id: number;
   nome: string;
+  descricao: string;
 }
 
 function Categorias() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [busca, setBusca] = useState("");
   const [editando, setEditando] = useState<Categoria | null>(null);
+  const [openNewCategoriaModal, setOpenNewCategoriaModal] =
+    useState<boolean>(false);
   const [form] = Form.useForm();
+  const [newForm] = Form.useForm();
 
   const carregar = () => categoriaService.getAll().then(setCategorias);
 
@@ -22,7 +26,22 @@ function Categorias() {
 
   const abrirEdicao = (categoria: Categoria) => {
     setEditando(categoria);
-    form.setFieldsValue({ nome: categoria.nome });
+    form.setFieldsValue({
+      nome: categoria.nome,
+      descricao: categoria.descricao,
+    });
+  };
+
+  const salvarCategoria = async () => {
+    try {
+      const values = await newForm.validateFields();
+      await categoriaService.create(values);
+      carregar();
+      setOpenNewCategoriaModal(false);
+      newForm.resetFields();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const salvarEdicao = async () => {
@@ -50,6 +69,7 @@ function Categorias() {
 
   const columns = [
     { title: "Nome", dataIndex: "nome", key: "nome" },
+    { title: "Descrição", dataIndex: "descricao", key: "descricao" },
     {
       title: "Editar",
       key: "editar",
@@ -76,11 +96,24 @@ function Categorias() {
   return (
     <div style={{ padding: 24 }}>
       <Typography.Title>Categorias</Typography.Title>
-      <Input.Search
-        placeholder="Buscar por nome..."
-        onChange={(e) => setBusca(e.target.value)}
-        style={{ marginBottom: 16, maxWidth: 400 }}
-      />
+      <Row
+        justify="center"
+        align="middle"
+        style={{ marginBottom: 16, position: "relative" }}
+      >
+        <Col>
+          <Input.Search
+            placeholder="Buscar por nome..."
+            onChange={(e) => setBusca(e.target.value)}
+            style={{ width: 400 }}
+          />
+        </Col>
+        <Col style={{ position: "absolute", right: 0 }}>
+          <Button onClick={() => setOpenNewCategoriaModal(true)} type="primary">
+            +
+          </Button>
+        </Col>
+      </Row>
       <Table dataSource={categoriasFiltradas} columns={columns} rowKey="id" />
 
       <Modal
@@ -94,6 +127,39 @@ function Categorias() {
             name="nome"
             label="Nome"
             rules={[{ required: true, message: "Informe o nome" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="descricao"
+            label="Descrição"
+            rules={[{ required: true, message: "Informe a descrição" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Form>
+      </Modal>
+      <Modal
+        title="Adicionar Categoria"
+        open={openNewCategoriaModal}
+        onOk={salvarCategoria}
+        onCancel={() => {
+          newForm.resetFields();
+          setOpenNewCategoriaModal(false);
+        }}
+      >
+        <Form form={newForm} layout="vertical">
+          <Form.Item
+            name="nome"
+            label="Nome"
+            rules={[{ required: true, message: "Informe o nome" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="descricao"
+            label="Descrição"
+            rules={[{ required: true, message: "Informe a descrição" }]}
           >
             <Input />
           </Form.Item>
