@@ -2,7 +2,7 @@ import { Button, Col, Row, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const botoes = [
-  { label: "Livro", rota: "/livros/editar" },
+  { label: "Livro", rota: "/livros" },
   { label: "Categorias", rota: "/categorias" },
   { label: "Editoras", rota: "/editoras" },
   { label: "Usuários", rota: "/usuarios" },

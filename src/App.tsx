@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Livros from "./pages/Livros";
+import PaginaInicial from "./pages/PaginaInicial";
 import Layout from "./components/Layout";
 import Emprestimos from "./pages/Emprestimos";
 import Configuracoes from "./pages/Configuracoes";
@@ -7,16 +7,16 @@ import Categorias from "./pages/Categorias";
 import Autores from "./pages/Autores";
 import Editoras from "./pages/Editoras";
 import Usuarios from "./pages/Usuarios";
-import EditarLivros from "./pages/EditarLivros";
 import Exemplares from "./pages/Exemplares";
+import Livros from "./pages/Livros";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Livros />} />
+        <Route path="/" element={<PaginaInicial />} />
         <Route element={<Layout />}>
-          <Route path="/livros" element={<EditarLivros />} />
+          <Route path="/livros" element={<Livros />} />
           <Route path="/emprestimos" element={<Emprestimos />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
           <Route path="/categorias" element={<Categorias />} />
