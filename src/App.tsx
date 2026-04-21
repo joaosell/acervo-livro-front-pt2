@@ -8,6 +8,7 @@ import Categorias from "./pages/Categorias";
 import Autores from "./pages/Autores";
 import Editoras from "./pages/Editoras";
 import Usuarios from "./pages/Usuarios";
+import { EditarLivros } from "./pages/EditarLivros";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route element={<Layout />}>
           <Route path="/livros" element={<Livros />} />
-          <Route path="/livros/editar" element={<div>Editar Livros</div>} />
+          <Route path="/livros/editar" element={<EditarLivros />} />
           <Route path="/emprestimos" element={<Emprestimos />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
           <Route path="/categorias" element={<Categorias />} />

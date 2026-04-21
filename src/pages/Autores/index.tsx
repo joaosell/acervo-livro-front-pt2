@@ -2,17 +2,12 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Input, Modal, Row, Table, Typography } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { autorService } from "../../services/autorService";
-
-interface Autores {
-  id: number;
-  nome: string;
-  nacionalidade: string;
-}
+import type { IAutores } from "../../types/autores";
 
 function Autores() {
-  const [autores, setAutores] = useState<Autores[]>([]);
+  const [autores, setAutores] = useState<IAutores[]>([]);
   const [busca, setBusca] = useState("");
-  const [editando, setEditando] = useState<Autores | null>(null);
+  const [editando, setEditando] = useState<IAutores | null>(null);
   const [openNewAutorModal, setOpenNewAutorModal] = useState<boolean>(false);
   const [form] = Form.useForm();
   const [newForm] = Form.useForm();
@@ -23,7 +18,7 @@ function Autores() {
     carregar();
   }, []);
 
-  const abrirEdicao = (autor: Autores) => {
+  const abrirEdicao = (autor: IAutores) => {
     setEditando(autor);
     form.setFieldsValue({
       nome: autor.nome,
@@ -50,7 +45,7 @@ function Autores() {
     carregar();
   };
 
-  const confirmarRemocao = (autor: Autores) => {
+  const confirmarRemocao = (autor: IAutores) => {
     Modal.confirm({
       title: "Remover autor",
       content: `Deseja remover "${autor.nome}"?`,
@@ -76,14 +71,14 @@ function Autores() {
     {
       title: "Editar",
       key: "editar",
-      render: (_: unknown, autor: Autores) => (
+      render: (_: unknown, autor: IAutores) => (
         <Button icon={<EditOutlined />} onClick={() => abrirEdicao(autor)} />
       ),
     },
     {
       title: "Remover",
       key: "remover",
-      render: (_: unknown, autor: Autores) => (
+      render: (_: unknown, autor: IAutores) => (
         <Button
           danger
           icon={<DeleteOutlined />}

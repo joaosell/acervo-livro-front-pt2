@@ -2,20 +2,11 @@ import { useEffect, useState } from "react";
 import { Button, Input, Modal, Table, Typography } from "antd";
 import { livroService } from "../../services/livroService";
 import { exemplarService } from "../../services/exemplarService";
-
-interface Livro {
-  id: number;
-  titulo: string;
-  isbn: string;
-  ano_publicacao: number;
-  editora: string;
-  autor: string;
-  categoria: string;
-}
+import type { ILivros } from "../../types/Livros";
 
 function Livros() {
-  const [livros, setLivros] = useState<Livro[]>([]);
-  const [exemplares, setExemplares] = useState<Livro[]>([]);
+  const [livros, setLivros] = useState<ILivros[]>([]);
+  const [exemplares, setExemplares] = useState<ILivros[]>([]);
   const [busca, setBusca] = useState("");
   const [openExemplaresModal, setOpenExemplaresModal] = useState(false);
 
@@ -39,7 +30,7 @@ function Livros() {
       title: "Título",
       dataIndex: "titulo",
       key: "titulo",
-      render: (_: unknown, livro: Livro) => (
+      render: (_: unknown, livro: ILivros) => (
         <Typography.Link onClick={() => handleOpenExemplaresModal(livro.id)}>
           {livro.titulo}
         </Typography.Link>
@@ -52,7 +43,7 @@ function Livros() {
     {
       title: "Ação",
       key: "acao",
-      render: (_: unknown, livro: Livro) => (
+      render: (_: unknown, livro: ILivros) => (
         <Button
           type="primary"
           onClick={() => alert(`Empréstimo do livro: ${livro.titulo}`)}

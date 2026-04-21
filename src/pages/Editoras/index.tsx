@@ -2,17 +2,12 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Input, Modal, Row, Table, Typography } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { editoraService } from "../../services/editoraService";
-
-interface Editoras {
-  id: number;
-  nome: string;
-  cidade: string;
-}
+import type { IEditoras } from "../../types/Editoras.tsx";
 
 function Editoras() {
-  const [editoras, setEditoras] = useState<Editoras[]>([]);
+  const [editoras, setEditoras] = useState<IEditoras[]>([]);
   const [busca, setBusca] = useState("");
-  const [editando, setEditando] = useState<Editoras | null>(null);
+  const [editando, setEditando] = useState<IEditoras | null>(null);
   const [openNewEditoraModal, setOpenNewEditoraModal] =
     useState<boolean>(false);
   const [form] = Form.useForm();
@@ -24,7 +19,7 @@ function Editoras() {
     carregar();
   }, []);
 
-  const abrirEdicao = (editora: Editoras) => {
+  const abrirEdicao = (editora: IEditoras) => {
     setEditando(editora);
     form.setFieldsValue({
       nome: editora.nome,
@@ -51,7 +46,7 @@ function Editoras() {
     carregar();
   };
 
-  const confirmarRemocao = (editora: Editoras) => {
+  const confirmarRemocao = (editora: IEditoras) => {
     Modal.confirm({
       title: "Remover editora",
       content: `Deseja remover "${editora.nome}"?`,
@@ -77,14 +72,14 @@ function Editoras() {
     {
       title: "Editar",
       key: "editar",
-      render: (_: unknown, editora: Editoras) => (
+      render: (_: unknown, editora: IEditoras) => (
         <Button icon={<EditOutlined />} onClick={() => abrirEdicao(editora)} />
       ),
     },
     {
       title: "Remover",
       key: "remover",
-      render: (_: unknown, editora: Editoras) => (
+      render: (_: unknown, editora: IEditoras) => (
         <Button
           danger
           icon={<DeleteOutlined />}

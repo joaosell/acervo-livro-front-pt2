@@ -2,17 +2,12 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Input, Modal, Row, Table, Typography } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { categoriaService } from "../../services/categoriaService";
-
-interface Categoria {
-  id: number;
-  nome: string;
-  descricao: string;
-}
+import type { ICategoria } from "../../types/Categorias";
 
 function Categorias() {
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [categorias, setCategorias] = useState<ICategoria[]>([]);
   const [busca, setBusca] = useState("");
-  const [editando, setEditando] = useState<Categoria | null>(null);
+  const [editando, setEditando] = useState<ICategoria | null>(null);
   const [openNewCategoriaModal, setOpenNewCategoriaModal] =
     useState<boolean>(false);
   const [form] = Form.useForm();
@@ -24,7 +19,7 @@ function Categorias() {
     carregar();
   }, []);
 
-  const abrirEdicao = (categoria: Categoria) => {
+  const abrirEdicao = (categoria: ICategoria) => {
     setEditando(categoria);
     form.setFieldsValue({
       nome: categoria.nome,
@@ -51,7 +46,7 @@ function Categorias() {
     carregar();
   };
 
-  const confirmarRemocao = (categoria: Categoria) => {
+  const confirmarRemocao = (categoria: ICategoria) => {
     Modal.confirm({
       title: "Remover categoria",
       content: `Deseja remover "${categoria.nome}"?`,
@@ -73,7 +68,7 @@ function Categorias() {
     {
       title: "Editar",
       key: "editar",
-      render: (_: unknown, categoria: Categoria) => (
+      render: (_: unknown, categoria: ICategoria) => (
         <Button
           icon={<EditOutlined />}
           onClick={() => abrirEdicao(categoria)}
@@ -83,7 +78,7 @@ function Categorias() {
     {
       title: "Remover",
       key: "remover",
-      render: (_: unknown, categoria: Categoria) => (
+      render: (_: unknown, categoria: ICategoria) => (
         <Button
           danger
           icon={<DeleteOutlined />}

@@ -12,19 +12,12 @@ import {
 } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { usuarioService } from "../../services/usuarioService";
-
-interface Usuarios {
-  id: number;
-  nome: string;
-  email: string;
-  senha: string;
-  tipo: number;
-}
+import type { IUsuarios } from "../../types/Usuarios";
 
 function Usuarios() {
-  const [usuarios, setUsuarios] = useState<Usuarios[]>([]);
+  const [usuarios, setUsuarios] = useState<IUsuarios[]>([]);
   const [busca, setBusca] = useState("");
-  const [editando, setEditando] = useState<Usuarios | null>(null);
+  const [editando, setEditando] = useState<IUsuarios | null>(null);
   const [openNewUsuarioModal, setOpenNewUsuarioModal] =
     useState<boolean>(false);
   const [form] = Form.useForm();
@@ -36,7 +29,7 @@ function Usuarios() {
     carregar();
   }, []);
 
-  const abrirEdicao = (usuario: Usuarios) => {
+  const abrirEdicao = (usuario: IUsuarios) => {
     setEditando(usuario);
     form.setFieldsValue({
       nome: usuario.nome,
@@ -65,7 +58,7 @@ function Usuarios() {
     carregar();
   };
 
-  const confirmarRemocao = (usuario: Usuarios) => {
+  const confirmarRemocao = (usuario: IUsuarios) => {
     Modal.confirm({
       title: "Remover usuario",
       content: `Deseja remover "${usuario.nome}"?`,
@@ -101,14 +94,14 @@ function Usuarios() {
     {
       title: "Editar",
       key: "editar",
-      render: (_: unknown, usuario: Usuarios) => (
+      render: (_: unknown, usuario: IUsuarios) => (
         <Button icon={<EditOutlined />} onClick={() => abrirEdicao(usuario)} />
       ),
     },
     {
       title: "Remover",
       key: "remover",
-      render: (_: unknown, usuario: Usuarios) => (
+      render: (_: unknown, usuario: IUsuarios) => (
         <Button
           danger
           icon={<DeleteOutlined />}
