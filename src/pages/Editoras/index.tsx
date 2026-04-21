@@ -1,42 +1,43 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Input, Modal, Row, Table, Typography } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { autorService } from "../../services/autorService";
+import { editoraService } from "../../services/editoraService";
 
-interface Autores {
+interface Editoras {
   id: number;
   nome: string;
-  nacionalidade: string;
+  cidade: string;
 }
 
-function Autores() {
-  const [autores, setAutores] = useState<Autores[]>([]);
+function Editoras() {
+  const [editoras, setEditoras] = useState<Editoras[]>([]);
   const [busca, setBusca] = useState("");
-  const [editando, setEditando] = useState<Autores | null>(null);
-  const [openNewAutorModal, setOpenNewAutorModal] = useState<boolean>(false);
+  const [editando, setEditando] = useState<Editoras | null>(null);
+  const [openNewEditoraModal, setOpenNewEditoraModal] =
+    useState<boolean>(false);
   const [form] = Form.useForm();
   const [newForm] = Form.useForm();
 
-  const carregar = () => autorService.getAll().then(setAutores);
+  const carregar = () => editoraService.getAll().then(setEditoras);
 
   useEffect(() => {
     carregar();
   }, []);
 
-  const abrirEdicao = (autor: Autores) => {
-    setEditando(autor);
+  const abrirEdicao = (editora: Editoras) => {
+    setEditando(editora);
     form.setFieldsValue({
-      nome: autor.nome,
-      nacionalidade: autor.nacionalidade,
+      nome: editora.nome,
+      cidade: editora.cidade,
     });
   };
 
-  const salvarAutor = async () => {
+  const salvarEditora = async () => {
     try {
       const values = await newForm.validateFields();
-      await autorService.create(values);
+      await editoraService.create(values);
       carregar();
-      setOpenNewAutorModal(false);
+      setOpenNewEditoraModal(false);
       newForm.resetFields();
     } catch (e) {
       console.log(e);
@@ -45,49 +46,49 @@ function Autores() {
 
   const salvarEdicao = async () => {
     const values = await form.validateFields();
-    await autorService.update(editando!.id, values);
+    await editoraService.update(editando!.id, values);
     setEditando(null);
     carregar();
   };
 
-  const confirmarRemocao = (autor: Autores) => {
+  const confirmarRemocao = (editora: Editoras) => {
     Modal.confirm({
-      title: "Remover autor",
-      content: `Deseja remover "${autor.nome}"?`,
+      title: "Remover editora",
+      content: `Deseja remover "${editora.nome}"?`,
       okType: "danger",
       onOk: async () => {
-        await autorService.remove(autor.id);
+        await editoraService.remove(editora.id);
         carregar();
       },
     });
   };
 
-  const autorsFiltradas = autores.filter((c) =>
+  const editorasFiltradas = editoras.filter((c) =>
     c.nome.toLowerCase().includes(busca.toLowerCase()),
   );
 
   const columns = [
     { title: "Nome", dataIndex: "nome", key: "nome" },
     {
-      title: "Nacionalidade",
-      dataIndex: "nacionalidade",
-      key: "nacionalidade",
+      title: "Cidade",
+      dataIndex: "cidade",
+      key: "cidade",
     },
     {
       title: "Editar",
       key: "editar",
-      render: (_: unknown, autor: Autores) => (
-        <Button icon={<EditOutlined />} onClick={() => abrirEdicao(autor)} />
+      render: (_: unknown, editora: Editoras) => (
+        <Button icon={<EditOutlined />} onClick={() => abrirEdicao(editora)} />
       ),
     },
     {
       title: "Remover",
       key: "remover",
-      render: (_: unknown, autor: Autores) => (
+      render: (_: unknown, editora: Editoras) => (
         <Button
           danger
           icon={<DeleteOutlined />}
-          onClick={() => confirmarRemocao(autor)}
+          onClick={() => confirmarRemocao(editora)}
         />
       ),
     },
@@ -95,7 +96,7 @@ function Autores() {
 
   return (
     <div style={{ padding: 24 }}>
-      <Typography.Title>Autores</Typography.Title>
+      <Typography.Title>Editoras</Typography.Title>
       <Row
         justify="center"
         align="middle"
@@ -109,15 +110,15 @@ function Autores() {
           />
         </Col>
         <Col style={{ position: "absolute", right: 0 }}>
-          <Button onClick={() => setOpenNewAutorModal(true)} type="primary">
+          <Button onClick={() => setOpenNewEditoraModal(true)} type="primary">
             +
           </Button>
         </Col>
       </Row>
-      <Table dataSource={autorsFiltradas} columns={columns} rowKey="id" />
+      <Table dataSource={editorasFiltradas} columns={columns} rowKey="id" />
 
       <Modal
-        title="Editar Autor"
+        title="Editar Editora"
         open={!!editando}
         onOk={salvarEdicao}
         onCancel={() => setEditando(null)}
@@ -131,21 +132,21 @@ function Autores() {
             <Input />
           </Form.Item>
           <Form.Item
-            name="nacionalidade"
-            label="Nacionalidade"
-            rules={[{ required: true, message: "Informe a nacionalidade" }]}
+            name="cidade"
+            label="Cidade"
+            rules={[{ required: true, message: "Informe a cidade" }]}
           >
             <Input />
           </Form.Item>
         </Form>
       </Modal>
       <Modal
-        title="Adicionar Autor"
-        open={openNewAutorModal}
-        onOk={salvarAutor}
+        title="Adicionar Editora"
+        open={openNewEditoraModal}
+        onOk={salvarEditora}
         onCancel={() => {
           newForm.resetFields();
-          setOpenNewAutorModal(false);
+          setOpenNewEditoraModal(false);
         }}
       >
         <Form form={newForm} layout="vertical">
@@ -157,9 +158,9 @@ function Autores() {
             <Input />
           </Form.Item>
           <Form.Item
-            name="nacionalidade"
-            label="Nacionalidade"
-            rules={[{ required: true, message: "Informe a nacionalidade" }]}
+            name="cidade"
+            label="Cidade"
+            rules={[{ required: true, message: "Informe a cidade" }]}
           >
             <Input />
           </Form.Item>
@@ -169,4 +170,4 @@ function Autores() {
   );
 }
 
-export default Autores;
+export default Editoras;

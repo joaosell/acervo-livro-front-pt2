@@ -6,6 +6,7 @@ import Emprestimos from "./pages/Emprestimos";
 import Configuracoes from "./pages/Configuracoes";
 import Categorias from "./pages/Categorias";
 import Autores from "./pages/Autores";
+import Editoras from "./pages/Editoras";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="/emprestimos" element={<Emprestimos />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
           <Route path="/categorias" element={<Categorias />} />
-          <Route path="/editoras" element={<div>Editoras</div>} />
+          <Route path="/editoras" element={<Editoras />} />
           <Route path="/usuarios" element={<div>Usuários</div>} />
           <Route path="/autores" element={<Autores />} />
           <Route path="/exemplares" element={<div>Exemplares</div>} />
