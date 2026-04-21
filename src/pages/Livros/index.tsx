@@ -15,7 +15,7 @@ function Livros() {
   }, []);
 
   function handleOpenExemplaresModal(livro_id: number) {
-    exemplarService.getAll(livro_id).then(setExemplares);
+    exemplarService.getByBook(livro_id).then(setExemplares);
     setOpenExemplaresModal(true);
   }
 
