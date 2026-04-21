@@ -5,6 +5,7 @@ import Layout from "./components/Layout";
 import Emprestimos from "./pages/Emprestimos";
 import Configuracoes from "./pages/Configuracoes";
 import Categorias from "./pages/Categorias";
+import Autores from "./pages/Autores";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route path="/categorias" element={<Categorias />} />
           <Route path="/editoras" element={<div>Editoras</div>} />
           <Route path="/usuarios" element={<div>Usuários</div>} />
-          <Route path="/autores" element={<div>Autores</div>} />
+          <Route path="/autores" element={<Autores />} />
           <Route path="/exemplares" element={<div>Exemplares</div>} />
         </Route>
       </Routes>
