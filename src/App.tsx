@@ -7,6 +7,7 @@ import Configuracoes from "./pages/Configuracoes";
 import Categorias from "./pages/Categorias";
 import Autores from "./pages/Autores";
 import Editoras from "./pages/Editoras";
+import Usuarios from "./pages/Usuarios";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <Route path="/configuracoes" element={<Configuracoes />} />
           <Route path="/categorias" element={<Categorias />} />
           <Route path="/editoras" element={<Editoras />} />
-          <Route path="/usuarios" element={<div>Usuários</div>} />
+          <Route path="/usuarios" element={<Usuarios />} />
           <Route path="/autores" element={<Autores />} />
           <Route path="/exemplares" element={<div>Exemplares</div>} />
         </Route>
