@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { Button, Input, Modal, Table, Typography } from "antd";
 import { livroService } from "../../services/livroService";
 import { exemplarService } from "../../services/exemplarService";
-import type { ILivros } from "../../types/Livros";
+import type { IExemplares } from "../../types/Exemplares";
 
 function Livros() {
-  const [livros, setLivros] = useState<ILivros[]>([]);
-  const [exemplares, setExemplares] = useState<ILivros[]>([]);
+  const [livros, setLivros] = useState<IExemplares[]>([]);
+  const [exemplares, setExemplares] = useState<IExemplares[]>([]);
   const [busca, setBusca] = useState("");
   const [openExemplaresModal, setOpenExemplaresModal] = useState(false);
 
@@ -21,8 +21,8 @@ function Livros() {
 
   const livrosFiltrados = livros.filter(
     (livro) =>
-      livro.titulo.toLowerCase().includes(busca.toLowerCase()) ||
-      livro.editora.toLowerCase().includes(busca.toLowerCase()),
+      livro.livro.titulo.toLowerCase().includes(busca.toLowerCase()) ||
+      livro.editora.nome.toLowerCase().includes(busca.toLowerCase()),
   );
 
   const LivrosColumns = [
@@ -30,9 +30,9 @@ function Livros() {
       title: "Título",
       dataIndex: "titulo",
       key: "titulo",
-      render: (_: unknown, livro: ILivros) => (
+      render: (_: unknown, livro: IExemplares) => (
         <Typography.Link onClick={() => handleOpenExemplaresModal(livro.id)}>
-          {livro.titulo}
+          {livro.livro.titulo}
         </Typography.Link>
       ),
     },
@@ -43,10 +43,10 @@ function Livros() {
     {
       title: "Ação",
       key: "acao",
-      render: (_: unknown, livro: ILivros) => (
+      render: (_: unknown, livro: IExemplares) => (
         <Button
           type="primary"
-          onClick={() => alert(`Empréstimo do livro: ${livro.titulo}`)}
+          onClick={() => alert(`Empréstimo do livro: ${livro.livro.titulo}`)}
         >
           Emprestar
         </Button>

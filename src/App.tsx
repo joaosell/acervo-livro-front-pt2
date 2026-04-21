@@ -8,7 +8,7 @@ import Categorias from "./pages/Categorias";
 import Autores from "./pages/Autores";
 import Editoras from "./pages/Editoras";
 import Usuarios from "./pages/Usuarios";
-import { EditarLivros } from "./pages/EditarLivros";
+import EditarLivros from "./pages/EditarLivros";
 
 function App() {
   return (
