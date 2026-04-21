@@ -2,12 +2,12 @@ import { Button, Col, Row, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const botoes = [
-  { label: "Adicionar Livro", rota: "/livros/editar" },
+  { label: "Livro", rota: "/livros/editar" },
   { label: "Categorias", rota: "/categorias" },
-  { label: "Acessar Editoras", rota: "/editoras" },
-  { label: "Acessar Usuários", rota: "/usuarios" },
-  { label: "Acessar Autores", rota: "/autores" },
-  { label: "Acessar Exemplares", rota: "/exemplares" },
+  { label: "Editoras", rota: "/editoras" },
+  { label: "Usuários", rota: "/usuarios" },
+  { label: "Autores", rota: "/autores" },
+  { label: "Exemplares", rota: "/exemplares" },
 ];
 
 function Configuracoes() {

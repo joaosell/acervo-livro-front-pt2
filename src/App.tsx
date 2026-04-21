@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
 import Livros from "./pages/Livros";
 import Layout from "./components/Layout";
 import Emprestimos from "./pages/Emprestimos";
@@ -15,10 +14,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Livros />} />
         <Route element={<Layout />}>
-          <Route path="/livros" element={<Livros />} />
-          <Route path="/livros/editar" element={<EditarLivros />} />
+          <Route path="/livros" element={<EditarLivros />} />
           <Route path="/emprestimos" element={<Emprestimos />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
           <Route path="/categorias" element={<Categorias />} />

@@ -6,8 +6,8 @@ function Navbar() {
   const location = useLocation();
 
   const items = [
-    { key: "/livros", label: "Livros" },
-    { key: "/emprestimos", label: "Meus empréstimos" },
+    { key: "/", label: "Página Inicial" },
+    { key: "/emprestimos", label: "Empréstimos" },
     { key: "/configuracoes", label: "Configurações" },
   ];
 
