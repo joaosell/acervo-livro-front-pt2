@@ -9,6 +9,7 @@ import Autores from "./pages/Autores";
 import Editoras from "./pages/Editoras";
 import Usuarios from "./pages/Usuarios";
 import EditarLivros from "./pages/EditarLivros";
+import Exemplares from "./pages/Exemplares";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           <Route path="/editoras" element={<Editoras />} />
           <Route path="/usuarios" element={<Usuarios />} />
           <Route path="/autores" element={<Autores />} />
-          <Route path="/exemplares" element={<div>Exemplares</div>} />
+          <Route path="/exemplares" element={<Exemplares />} />
         </Route>
       </Routes>
     </BrowserRouter>
