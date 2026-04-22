@@ -42,7 +42,7 @@ function Emprestimos() {
 
   useEffect(() => {
     usuarioService.getAll().then(setUsuarios);
-    exemplarService.getAll().then(setExemplares);
+    exemplarService.getAllDisponiveis().then(setExemplares);
     carregar();
   }, []);
 

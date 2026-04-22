@@ -56,7 +56,7 @@ function PaginaInicial() {
 
   async function handleOpenExemplaresModal(livro_id: number) {
     try {
-      const data = await exemplarService.getByBook(livro_id);
+      const data = await exemplarService.getByBook(livro_id, true);
       setExemplares(data);
       setOpenExemplaresModal(true);
       setTituloDoLivro(
