@@ -9,6 +9,7 @@ import Editoras from "./pages/Editoras";
 import Usuarios from "./pages/Usuarios";
 import Exemplares from "./pages/Exemplares";
 import Livros from "./pages/Livros";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/usuarios" element={<Usuarios />} />
           <Route path="/autores" element={<Autores />} />
           <Route path="/exemplares" element={<Exemplares />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
