@@ -23,6 +23,8 @@ import dayjs from "dayjs";
 
 function Emprestimos() {
   const [emprestimos, setEmprestimos] = useState<IEmprestimo[]>([]);
+  const [exemplarSelecionado, setExemplarSelecionado] =
+    useState<IExemplares | null>(null);
   const [usuarios, setUsuarios] = useState<IUsuarios[]>([]);
   const [livros, setLivros] = useState<ILivros[]>([]);
   const [exemplares, setExemplares] = useState<IExemplares[]>([]);
@@ -158,6 +160,7 @@ function Emprestimos() {
         onCancel={() => {
           form.resetFields();
           setModalAberta(false);
+          setExemplarSelecionado(null);
         }}
         okText="Criar"
         cancelText="Cancelar"
@@ -174,9 +177,39 @@ function Emprestimos() {
                 value: a.id,
                 label: a.livro.titulo,
               }))}
+              onChange={(id) => {
+                const encontrado = exemplares.find((e) => e.id === id) || null;
+                setExemplarSelecionado(encontrado);
+              }}
             />
           </Form.Item>
-
+          {exemplarSelecionado && (
+            <div
+              style={{
+                marginBottom: 16,
+                padding: 12,
+                background: "#f5f5f5",
+                borderRadius: 6,
+              }}
+            >
+              <Typography.Text strong>Editora: </Typography.Text>
+              <Typography.Text>
+                {exemplarSelecionado.editora?.nome || "—"}
+              </Typography.Text>
+              <br />
+              <Typography.Text strong>Código de Patrimônio: </Typography.Text>
+              <Typography.Text>
+                {exemplarSelecionado.codigo_patrimonio || "—"}
+              </Typography.Text>
+              <br />
+              <Typography.Text strong>Autor(es): </Typography.Text>
+              <Typography.Text>
+                {exemplarSelecionado.livro?.autor
+                  ?.map((a) => a.nome)
+                  .join(", ") || "—"}
+              </Typography.Text>
+            </div>
+          )}
           <Form.Item
             name="usuario_id"
             label="Usuário"
