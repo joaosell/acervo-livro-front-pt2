@@ -2,7 +2,8 @@ import { api } from "./api";
 
 export const exemplarService = {
   getAll: () => api.get(`/exemplares`),
-  getByBook: (livro_id: number) => api.get(`/exemplares/${livro_id}`),
+  getByExemplar: (id: number) => api.get(`/exemplares/${id}`),
+  getByBook: (livro_id: number) => api.get(`/exemplares/livro/${livro_id}`),
   create: (body: {
     id: number;
     livro_id: number;
