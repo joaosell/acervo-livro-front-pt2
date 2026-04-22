@@ -113,7 +113,7 @@ function Usuarios() {
 
   return (
     <div style={{ padding: 24 }}>
-      <Typography.Title>Usuarios</Typography.Title>
+      <Typography.Title>Usuários</Typography.Title>
       <Row
         justify="center"
         align="middle"

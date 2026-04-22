@@ -4,6 +4,7 @@ import { livroService } from "../../services/livroService";
 import { exemplarService } from "../../services/exemplarService";
 import type { IExemplares } from "../../types/Exemplares";
 
+// NAO TA PRONTO AINDA
 function PaginaInicial() {
   const [livros, setLivros] = useState<IExemplares[]>([]);
   const [exemplares, setExemplares] = useState<IExemplares[]>([]);
@@ -11,7 +12,7 @@ function PaginaInicial() {
   const [openExemplaresModal, setOpenExemplaresModal] = useState(false);
 
   useEffect(() => {
-    livroService.getAll().then(setLivros);
+    exemplarService.getAll().then(setLivros);
   }, []);
 
   function handleOpenExemplaresModal(livro_id: number) {
@@ -30,15 +31,26 @@ function PaginaInicial() {
       title: "Título",
       dataIndex: "titulo",
       key: "titulo",
-      render: (_: unknown, livro: IExemplares) => (
-        <Typography.Link onClick={() => handleOpenExemplaresModal(livro.id)}>
-          {livro.livro.titulo}
+      render: (_: unknown, exemplar: IExemplares) => (
+        <Typography.Link onClick={() => handleOpenExemplaresModal(exemplar.id)}>
+          {exemplar.livro.titulo}
         </Typography.Link>
       ),
     },
-    { title: "Autor", dataIndex: "autor", key: "autor" },
+    {
+      title: "Autores",
+      key: "autor",
+      render: (_: unknown, exemplar: IExemplares) =>
+        exemplar.autor?.map((a) => a.nome).join(", ") || "—",
+    },
+    {
+      title: "Categorias",
+      key: "categoria",
+      render: (_: unknown, livro: IExemplares) =>
+        livro.categoria?.map((c) => c.nome).join(", ") || "—",
+    },
     { title: "Editora", dataIndex: "editora", key: "editora" },
-    { title: "Categoria", dataIndex: "categoria", key: "categoria" },
+
     { title: "Ano", dataIndex: "ano_publicacao", key: "ano_publicacao" },
     {
       title: "Ação",
