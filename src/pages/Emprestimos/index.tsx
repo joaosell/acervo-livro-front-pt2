@@ -6,6 +6,7 @@ import {
   Form,
   Modal,
   Row,
+  Segmented,
   Select,
   Table,
   Typography,
@@ -14,10 +15,8 @@ import { CheckOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { emprestimoService } from "../../services/emprestimoService";
 import type { IEmprestimo } from "../../types/Emprestimos";
 import { usuarioService } from "../../services/usuarioService";
-import { livroService } from "../../services/livroService";
 import { exemplarService } from "../../services/exemplarService";
 import type { IUsuarios } from "../../types/Usuarios";
-import type { ILivros } from "../../types/Livros";
 import type { IExemplares } from "../../types/Exemplares";
 import dayjs from "dayjs";
 
@@ -26,15 +25,22 @@ function Emprestimos() {
   const [exemplarSelecionado, setExemplarSelecionado] =
     useState<IExemplares | null>(null);
   const [usuarios, setUsuarios] = useState<IUsuarios[]>([]);
-  const [livros, setLivros] = useState<ILivros[]>([]);
   const [exemplares, setExemplares] = useState<IExemplares[]>([]);
   const [modalAberta, setModalAberta] = useState(false);
   const [form] = Form.useForm();
+  const [filtroAtivo, setFiltroAtivo] = useState<
+    "todos" | "ativos" | "inativos"
+  >("todos");
+
+  const emprestimosFiltrados = emprestimos.filter((e) => {
+    if (filtroAtivo === "ativos") return e.ativo;
+    if (filtroAtivo === "inativos") return !e.ativo;
+    return true;
+  });
 
   const carregar = () => emprestimoService.getAll().then(setEmprestimos);
 
   useEffect(() => {
-    livroService.getAll().then(setLivros);
     usuarioService.getAll().then(setUsuarios);
     exemplarService.getAll().then(setExemplares);
     carregar();
@@ -69,12 +75,35 @@ function Emprestimos() {
     {
       title: "Livro",
       key: "livro",
+      filters: [
+        ...new Map(
+          emprestimos.map((e) => [
+            e.exemplar?.livro?.titulo,
+            {
+              text: e.exemplar?.livro?.titulo,
+              value: e.exemplar?.livro?.titulo,
+            },
+          ]),
+        ).values(),
+      ],
+      onFilter: (value: unknown, emprestimo: IEmprestimo) =>
+        emprestimo.exemplar?.livro?.titulo === value,
       render: (_: unknown, emprestimo: IEmprestimo) =>
         emprestimo.exemplar?.livro?.titulo || "—",
     },
     {
       title: "Usuário",
       key: "usuario",
+      filters: [
+        ...new Map(
+          emprestimos.map((e) => [
+            e.usuario?.nome,
+            { text: e.usuario?.nome, value: e.usuario?.nome },
+          ]),
+        ).values(),
+      ],
+      onFilter: (value: unknown, emprestimo: IEmprestimo) =>
+        emprestimo.usuario?.nome === value,
       render: (_: unknown, emprestimo: IEmprestimo) =>
         emprestimo.usuario?.nome || "—",
     },
@@ -83,8 +112,21 @@ function Emprestimos() {
       title: "Data do Empréstimo",
       dataIndex: "data_emprestimo",
       key: "data_emprestimo",
+      sorter: (a: IEmprestimo, b: IEmprestimo) =>
+        new Date(a.data_emprestimo).getTime() -
+        new Date(b.data_emprestimo).getTime(),
       render: (_: unknown, emprestimo: IEmprestimo) =>
         new Date(emprestimo.data_emprestimo).toLocaleDateString("pt-BR"),
+    },
+    {
+      title: "Data de Devolução",
+      dataIndex: "data_devolucao",
+      key: "data_devolucao",
+      sorter: (a: IEmprestimo, b: IEmprestimo) =>
+        new Date(a.data_devolucao).getTime() -
+        new Date(b.data_devolucao).getTime(),
+      render: (_: unknown, emprestimo: IEmprestimo) =>
+        new Date(emprestimo.data_devolucao).toLocaleDateString("pt-BR"),
     },
     {
       title: "Ação",
@@ -151,7 +193,20 @@ function Emprestimos() {
         </Col>
       </Row>
 
-      <Table dataSource={emprestimos} columns={columns} rowKey="id" />
+      <Segmented
+        value={filtroAtivo}
+        onChange={(value) =>
+          setFiltroAtivo(value as "todos" | "ativos" | "inativos")
+        }
+        options={[
+          { label: "Todos", value: "todos" },
+          { label: "Ativos", value: "ativos" },
+          { label: "Inativos", value: "inativos" },
+        ]}
+        style={{ marginBottom: 16 }}
+      />
+
+      <Table dataSource={emprestimosFiltrados} columns={columns} rowKey="id" />
 
       <Modal
         title="Novo Empréstimo"
@@ -233,6 +288,9 @@ function Emprestimos() {
               style={{ width: "100%" }}
               placeholder="Selecione a data"
               format="DD/MM/YYYY"
+              disabledDate={(current) =>
+                current && current < dayjs().startOf("day")
+              }
             />
           </Form.Item>
         </Form>
