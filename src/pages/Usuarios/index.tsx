@@ -34,8 +34,6 @@ function Usuarios() {
     form.setFieldsValue({
       nome: usuario.nome,
       email: usuario.email,
-      senha: usuario.senha,
-      tipo: usuario.tipo,
     });
   };
 
@@ -77,19 +75,9 @@ function Usuarios() {
   const columns = [
     { title: "Nome", dataIndex: "nome", key: "nome" },
     {
-      title: "Tipo",
-      dataIndex: "tipo",
-      key: "tipo",
-    },
-    {
       title: "E-mail",
       dataIndex: "email",
       key: "email",
-    },
-    {
-      title: "Senha",
-      dataIndex: "senha",
-      key: "senha",
     },
     {
       title: "Editar",
@@ -157,13 +145,6 @@ function Usuarios() {
           >
             <Input />
           </Form.Item>
-          <Form.Item
-            name="senha"
-            label="Senha"
-            rules={[{ required: true, message: "Informe a senha" }]}
-          >
-            <Input.Password />
-          </Form.Item>
         </Form>
       </Modal>
       <Modal
@@ -191,26 +172,6 @@ function Usuarios() {
             ]}
           >
             <Input />
-          </Form.Item>
-          <Form.Item
-            name="senha"
-            label="Senha"
-            rules={[{ required: true, message: "Informe a senha" }]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item
-            name="tipo"
-            label="Tipo"
-            rules={[{ message: "Informe o tipo" }]}
-          >
-            <Select
-              defaultValue={"CLIENTE"}
-              options={[
-                { value: "ADMIN", label: "Admin" },
-                { value: "CLIENTE", label: "Cliente" },
-              ]}
-            />
           </Form.Item>
         </Form>
       </Modal>
