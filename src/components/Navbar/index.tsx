@@ -9,6 +9,7 @@ function Navbar() {
     { key: "/", label: "Página Inicial" },
     { key: "/emprestimos", label: "Empréstimos" },
     { key: "/configuracoes", label: "Configurações" },
+    { key: "/buscaavancada", label: "Busca Avançada" },
   ];
 
   return (

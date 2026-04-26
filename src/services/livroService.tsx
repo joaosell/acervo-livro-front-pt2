@@ -21,4 +21,9 @@ export const livroService = {
   ) => api.patch(`/livros/${id}`, body),
   remove: (id: number) => api.delete(`/livros/${id}`),
   getAll: () => api.get("/livros"),
+  buscarAvancado: (params: {
+    categoria_id?: number;
+    autor_id?: number;
+    onlyDisponiveis?: boolean;
+  }) => api.get("/livros/busca", { params }),
 };

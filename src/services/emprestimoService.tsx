@@ -10,4 +10,12 @@ export const emprestimoService = {
   }) => api.post("/emprestimos", body),
   remove: (id: number) => api.delete(`/emprestimos/${id}`),
   devolver: (id: number) => api.patch(`/emprestimos/${id}/devolucao`, {}),
+  buscarAvancado: (params: {
+    livro_id?: number;
+    usuario_id?: number;
+    exemplar_id?: number;
+    data_inicio?: string;
+    data_fim?: string;
+    ativo?: boolean;
+  }) => api.get("/emprestimos/busca", { params }),
 };
