@@ -14,6 +14,9 @@
 Sistema para gerenciamento de acervo de livros, que permite o controle de autores, categorias, editoras, usuários e exemplares, além da gestão de empréstimos.
 O sistema garante a organização e rastreabilidade dos livros disponíveis, possibilitando o controle de disponibilidade de exemplares e validações no processo de empréstimo.
 
+Este é projeto possui dois repositórios, sendo este repositório do Frontend e este outro  do <a href="https://github.com/paoli2004/acervo-livro">Backend<a/>
+
+
 ## 🛠️ Tecnologias utilizadas
  * React + Typescript
  * Biblioteca <a href="https://ant.design/">Ant Design<a/>
