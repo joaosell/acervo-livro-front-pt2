@@ -59,6 +59,7 @@ function Emprestimos() {
       carregar();
       setModalAberta(false);
       form.resetFields();
+      setExemplarSelecionado(null);
     } catch (e) {
       console.log(e);
     }
