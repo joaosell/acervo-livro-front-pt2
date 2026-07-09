@@ -1,24 +1,21 @@
-import type { IAutores } from "../types/autores";
-import type { ICategoria } from "../types/Categorias";
-
 import { api } from "./api";
 
 export const livroService = {
   create: (body: {
     titulo: string;
     isbn: number;
-    editora_id: number;
-    autores: IAutores[];
-    categorias: ICategoria[];
+    editora: string;
+    autores: string[];
+    categorias: string[];
   }) => api.post("/livros", body),
   update: (
     id: number,
     body: {
       titulo: string;
       isbn: number;
-      editora_id: number;
-      autores: IAutores[];
-      categorias: ICategoria[];
+      editora: string;
+      autores: string[];
+      categorias: string[];
     },
   ) => api.patch(`/livros/${id}`, body),
   remove: (id: number) => api.delete(`/livros/${id}`),

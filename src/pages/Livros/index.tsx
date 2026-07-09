@@ -12,16 +12,19 @@ import {
 } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { livroService } from "../../services/livroService";
-import type { ILivros } from "../../types/Livros";
+import type { ILivros } from "../../types/livros";
 import { autorService } from "../../services/autorService";
 import { categoriaService } from "../../services/categoriaService";
+import { editoraService } from "../../services/editoraService";
 import type { IAutores } from "../../types/autores";
 import type { ICategoria } from "../../types/Categorias";
+import type { IEditoras } from "../../types/Editoras";
 
 function Livros() {
   const [livros, setLivros] = useState<ILivros[]>([]);
   const [autores, setAutores] = useState([]);
   const [categorias, setCategorias] = useState([]);
+  const [editoras, setEditoras] = useState<IEditoras[]>([]);
   const [busca, setBusca] = useState("");
   const [editando, setEditando] = useState<ILivros | null>(null);
   const [openNewLivroModal, setOpenNewLivroModal] = useState<boolean>(false);
@@ -34,6 +37,7 @@ function Livros() {
     carregar();
     autorService.getAll().then(setAutores);
     categoriaService.getAll().then(setCategorias);
+    editoraService.getAll().then(setEditoras);
   }, []);
 
   const abrirEdicao = (livro: ILivros) => {
@@ -41,8 +45,9 @@ function Livros() {
     form.setFieldsValue({
       titulo: livro.titulo,
       isbn: livro.isbn,
-      autor_id: livro.autor?.map((a) => a.id) ?? [],
-      categoria_id: livro.categoria?.map((c) => c.id) ?? [],
+      editora: livro.editora?.id,
+      autores: livro.autores?.map((a) => a.id) ?? [],
+      categorias: livro.categorias?.map((c) => c.id) ?? [],
     });
   };
 
@@ -85,16 +90,21 @@ function Livros() {
     { title: "Título", dataIndex: "titulo", key: "titulo" },
     { title: "ISBN", dataIndex: "isbn", key: "isbn" },
     {
+      title: "Editora",
+      key: "editora",
+      render: (_: unknown, livro: ILivros) => livro.editora?.nome || "—",
+    },
+    {
       title: "Autores",
-      key: "autor",
+      key: "autores",
       render: (_: unknown, livro: ILivros) =>
-        livro.autor?.map((a) => a.nome).join(", ") || "—",
+        livro.autores?.map((a) => a.nome).join(", ") || "—",
     },
     {
       title: "Categorias",
-      key: "categoria",
+      key: "categorias",
       render: (_: unknown, livro: ILivros) =>
-        livro.categoria?.map((c) => c.nome).join(", ") || "—",
+        livro.categorias?.map((c) => c.nome).join(", ") || "—",
     },
     {
       title: "Editar",
@@ -161,7 +171,20 @@ function Livros() {
             <Input />
           </Form.Item>
           <Form.Item
-            name="autor_id"
+            name="editora"
+            label="Editora"
+            rules={[{ required: true, message: "Informe a editora" }]}
+          >
+            <Select
+              options={editoras.map((e: IEditoras) => ({
+                value: e.id,
+                label: e.nome,
+              }))}
+              placeholder="Selecione a editora"
+            />
+          </Form.Item>
+          <Form.Item
+            name="autores"
             label="Autores"
             rules={[{ required: true, message: "Informe o(s) Autor(es)" }]}
           >
@@ -176,7 +199,7 @@ function Livros() {
           </Form.Item>
 
           <Form.Item
-            name="categoria_id"
+            name="categorias"
             label="Categorias"
             rules={[{ required: true, message: "Informe a(s) Categoria(s)" }]}
           >
@@ -216,7 +239,20 @@ function Livros() {
             <Input />
           </Form.Item>
           <Form.Item
-            name="autor_id"
+            name="editora"
+            label="Editora"
+            rules={[{ required: true, message: "Informe a editora" }]}
+          >
+            <Select
+              options={editoras.map((e: IEditoras) => ({
+                value: e.id,
+                label: e.nome,
+              }))}
+              placeholder="Selecione a editora"
+            />
+          </Form.Item>
+          <Form.Item
+            name="autores"
             label="Autores"
             rules={[{ required: true, message: "Informe o(s) Autor(es)" }]}
           >
@@ -230,7 +266,7 @@ function Livros() {
             />
           </Form.Item>
           <Form.Item
-            name="categoria_id"
+            name="categorias"
             label="Categorias"
             rules={[{ required: true, message: "Informe a(s) Categoria(s)" }]}
           >

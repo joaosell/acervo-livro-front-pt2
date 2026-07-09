@@ -8,6 +8,6 @@ export interface ILivros {
   isbn: string;
   ano_publicacao: number;
   editora: IEditoras;
-  autor: IAutores[];
-  categoria: ICategoria[];
+  autores: IAutores[];
+  categorias: ICategoria[];
 }
