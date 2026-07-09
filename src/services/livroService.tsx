@@ -7,6 +7,7 @@ export const livroService = {
   create: (body: {
     titulo: string;
     isbn: number;
+    editora_id: number;
     autores: IAutores[];
     categorias: ICategoria[];
   }) => api.post("/livros", body),
@@ -15,6 +16,7 @@ export const livroService = {
     body: {
       titulo: string;
       isbn: number;
+      editora_id: number;
       autores: IAutores[];
       categorias: ICategoria[];
     },

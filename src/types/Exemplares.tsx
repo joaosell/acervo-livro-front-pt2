@@ -1,5 +1,4 @@
-import type { IEditoras } from "./Editoras";
-import type { ILivros } from "./Livros";
+import type { ILivros } from "./livros";
 
 export interface IExemplares {
   id: number;
@@ -7,5 +6,4 @@ export interface IExemplares {
   codigo_patrimonio: number;
   ano_publicacao: number;
   emprestimos: [];
-  editora: IEditoras;
 }

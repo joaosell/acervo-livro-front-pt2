@@ -12,7 +12,6 @@ export const exemplarService = {
     codigo_patrimonio: number;
     ano_publicacao: number;
     emprestimos: [];
-    editora_id: number;
   }) => api.post("/exemplares", body),
   update: (
     id: number,
@@ -22,7 +21,6 @@ export const exemplarService = {
       codigo_patrimonio: number;
       ano_publicacao: number;
       emprestimos: [];
-      editora_id: number;
     },
   ) => api.patch(`/exemplares/${id}`, body),
   remove: (id: number) => api.delete(`/exemplares/${id}`),
