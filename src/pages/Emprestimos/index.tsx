@@ -222,7 +222,7 @@ function Emprestimos() {
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            name="exemplar_id"
+            name="exemplar"
             label="Exemplar"
             rules={[{ required: true, message: "Selecione o exemplar" }]}
           >
@@ -249,7 +249,7 @@ function Emprestimos() {
             >
               <Typography.Text strong>Editora: </Typography.Text>
               <Typography.Text>
-                {exemplarSelecionado.editora?.nome || "—"}
+                {exemplarSelecionado.livro?.editora?.nome || "—"}
               </Typography.Text>
               <br />
               <Typography.Text strong>Código de Patrimônio: </Typography.Text>
@@ -259,14 +259,14 @@ function Emprestimos() {
               <br />
               <Typography.Text strong>Autor(es): </Typography.Text>
               <Typography.Text>
-                {exemplarSelecionado.livro?.autor
+                {exemplarSelecionado.livro?.autores
                   ?.map((a) => a.nome)
                   .join(", ") || "—"}
               </Typography.Text>
             </div>
           )}
           <Form.Item
-            name="usuario_id"
+            name="usuario"
             label="Usuário"
             rules={[{ required: true, message: "Selecione o usuário" }]}
           >

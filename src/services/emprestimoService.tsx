@@ -3,8 +3,8 @@ import { api } from "./api";
 export const emprestimoService = {
   getAll: () => api.get("/emprestimos"),
   create: (body: {
-    exemplar_id: number;
-    usuario_id: number;
+    exemplar: string;
+    usuario: string;
     data_emprestimo: string;
     data_devolucao: string;
   }) => api.post("/emprestimos", body),
