@@ -16,16 +16,13 @@ import dayjs from "dayjs";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { exemplarService } from "../../services/exemplarService";
 import type { IExemplares } from "../../types/Exemplares";
-import type { IEditoras } from "../../types/Editoras";
-import type { ILivros } from "../../types/Livros";
+import type { ILivros } from "../../types/livros";
 import { livroService } from "../../services/livroService";
-import { editoraService } from "../../services/editoraService";
 import type { IAutores } from "../../types/autores";
 import { autorService } from "../../services/autorService";
 
 function Exemplares() {
   const [exemplares, setExemplares] = useState<IExemplares[]>([]);
-  const [editoras, setEditoras] = useState<IEditoras[]>([]);
   const [livros, setLivros] = useState<ILivros[]>([]);
   const [autores, setAutores] = useState<IAutores[]>([]);
   const [busca, setBusca] = useState("");
@@ -40,7 +37,6 @@ function Exemplares() {
   useEffect(() => {
     carregar();
     livroService.getAll().then(setLivros);
-    editoraService.getAll().then(setEditoras);
     autorService.getAll().then(setAutores);
   }, []);
 
@@ -49,8 +45,7 @@ function Exemplares() {
     form.setFieldsValue({
       codigo_patrimonio: exemplar.codigo_patrimonio,
       ano_publicacao: dayjs().year(exemplar.ano_publicacao),
-      livro_id: exemplar.livro.id || "",
-      editora_id: exemplar.editora.id || "",
+      livro: exemplar.livro.id || "",
     });
   };
 
@@ -120,7 +115,7 @@ function Exemplares() {
       render: (_: unknown, exemplar: IExemplares) => {
         const livro = livros.find((l) => l.id === exemplar.livro.id);
         return (
-          livro?.autor
+          livro?.autores
             ?.map((a) => {
               const autor = autores.find((au) => au.id === a.id);
               return autor?.nome;
@@ -133,7 +128,7 @@ function Exemplares() {
       title: "Editora",
       key: "editora",
       render: (_: unknown, exemplar: IExemplares) =>
-        exemplar.editora?.nome || "—",
+        exemplar.livro?.editora?.nome || "—",
     },
     {
       title: "Editar",
@@ -212,7 +207,7 @@ function Exemplares() {
           </Form.Item>
 
           <Form.Item
-            name="livro_id"
+            name="livro"
             label="Livro"
             rules={[{ required: true, message: "Informe o livro" }]}
           >
@@ -221,20 +216,6 @@ function Exemplares() {
               options={livros.map((c: ILivros) => ({
                 value: c.id,
                 label: c.titulo,
-              }))}
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="editora_id"
-            label="Editora"
-            rules={[{ required: true, message: "Informe a editora" }]}
-          >
-            <Select
-              placeholder="Selecione a editora"
-              options={editoras.map((c: IEditoras) => ({
-                value: c.id,
-                label: c.nome,
               }))}
             />
           </Form.Item>
@@ -277,7 +258,7 @@ function Exemplares() {
           </Form.Item>
 
           <Form.Item
-            name="livro_id"
+            name="livro"
             label="Livro"
             rules={[{ required: true, message: "Informe o livro" }]}
           >
@@ -286,20 +267,6 @@ function Exemplares() {
               options={livros.map((c: ILivros) => ({
                 value: c.id,
                 label: c.titulo,
-              }))}
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="editora_id"
-            label="Editora"
-            rules={[{ required: true, message: "Informe a editora" }]}
-          >
-            <Select
-              placeholder="Selecione a editora"
-              options={editoras.map((c: IEditoras) => ({
-                value: c.id,
-                label: c.nome,
               }))}
             />
           </Form.Item>

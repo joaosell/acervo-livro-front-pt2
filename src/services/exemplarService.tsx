@@ -7,20 +7,16 @@ export const exemplarService = {
   getByBook: (livro_id: number, onlyDisponiveis = false) =>
     api.get(`/exemplares/livro/${livro_id}?onlyDisponiveis=${onlyDisponiveis}`),
   create: (body: {
-    id: number;
-    livro_id: number;
+    livro: string;
     codigo_patrimonio: number;
     ano_publicacao: number;
-    emprestimos: [];
   }) => api.post("/exemplares", body),
   update: (
     id: number,
     body: {
-      id: number;
-      livro_id: number;
+      livro: string;
       codigo_patrimonio: number;
       ano_publicacao: number;
-      emprestimos: [];
     },
   ) => api.patch(`/exemplares/${id}`, body),
   remove: (id: number) => api.delete(`/exemplares/${id}`),
