@@ -12,7 +12,7 @@ import {
 import { livroService } from "../../services/livroService";
 import { exemplarService } from "../../services/exemplarService";
 import type { IExemplares } from "../../types/Exemplares";
-import type { ILivros } from "../../types/Livros";
+import type { ILivros } from "../../types/livros";
 import type { IUsuarios } from "../../types/Usuarios";
 import { usuarioService } from "../../services/usuarioService";
 import dayjs from "dayjs";
@@ -43,7 +43,7 @@ function PaginaInicial() {
         data_devolucao: values.data_devolucao.format("YYYY-MM-DD"),
         data_emprestimo: dayjs().format("YYYY-MM-DD"),
         ativo: true,
-        exemplar_id: exemplar_id,
+        exemplar: exemplar_id,
       };
       await emprestimoService.create(payload);
       setOpenExemplaresModal(false);
@@ -87,13 +87,13 @@ function PaginaInicial() {
       title: "Autores",
       key: "autor",
       render: (_: unknown, livro: ILivros) =>
-        livro.autor?.map((a) => a.nome).join(", ") || "—",
+        livro.autores?.map((a) => a.nome).join(", ") || "—",
     },
     {
       title: "Categorias",
       key: "categoria",
       render: (_: unknown, livro: ILivros) =>
-        livro.categoria?.map((c) => c.nome).join(", ") || "—",
+        livro.categorias?.map((c) => c.nome).join(", ") || "—",
     },
     { title: "ISBN", dataIndex: "isbn", key: "isbn" },
     {
@@ -124,7 +124,7 @@ function PaginaInicial() {
       title: "Editora",
       key: "editora",
       render: (_: unknown, exemplar: IExemplares) =>
-        exemplar.editora?.nome || "—",
+        exemplar.livro?.editora?.nome || "—",
     },
     {
       title: "Ação",
@@ -178,7 +178,7 @@ function PaginaInicial() {
             }}
           >
             <Form.Item
-              name="exemplar_id"
+              name="exemplar"
               initialValue={exemplarSelecionado}
               hidden
             >
@@ -186,7 +186,7 @@ function PaginaInicial() {
             </Form.Item>
 
             <Form.Item
-              name="usuario_id"
+              name="usuario"
               label="Usuário"
               rules={[{ required: true, message: "Selecione o usuário" }]}
             >
