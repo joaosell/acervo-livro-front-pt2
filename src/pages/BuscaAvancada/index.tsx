@@ -17,7 +17,7 @@ import { autorService } from "../../services/autorService";
 import { categoriaService } from "../../services/categoriaService";
 import { usuarioService } from "../../services/usuarioService";
 import { exemplarService } from "../../services/exemplarService";
-import type { ILivros } from "../../types/Livros";
+import type { ILivros } from "../../types/livros";
 import type { IEmprestimo } from "../../types/Emprestimos";
 
 type TipoBusca = "livros" | "emprestimos";
@@ -48,7 +48,7 @@ function BuscaAvancada() {
       exemplarService.getByBook(livroSelecionado).then(setExemplares);
     } else {
       setExemplares([]);
-      form.setFieldValue("exemplar_id", undefined);
+      form.setFieldValue("exemplar", undefined);
     }
   }, [livroSelecionado]);
 
@@ -58,16 +58,16 @@ function BuscaAvancada() {
     try {
       if (tipoBusca === "livros") {
         const data = await livroService.buscarAvancado({
-          categoria_id: values.categoria_id,
-          autor_id: values.autor_id,
+          categorias: values.categorias,
+          autores: values.autores,
           onlyDisponiveis: values.onlyDisponiveis ?? false,
         });
         setResultados(data);
       } else {
         const data = await emprestimoService.buscarAvancado({
-          livro_id: values.livro_id,
-          usuario_id: values.usuario_id,
-          exemplar_id: values.exemplar_id,
+          livro: values.livro,
+          usuario: values.usuario,
+          exemplar: values.exemplar,
           data_inicio: values.data_emprestimo?.[0]?.toISOString(),
           data_fim: values.data_emprestimo?.[1]?.toISOString(),
           ativo: values.ativo ?? undefined,
@@ -86,12 +86,12 @@ function BuscaAvancada() {
     setJaBuscou(false);
     setResultados([]);
     form.resetFields([
-      "categoria_id",
-      "autor_id",
+      "categorias",
+      "autores",
       "onlyDisponiveis",
-      "livro_id",
-      "usuario_id",
-      "exemplar_id",
+      "livro",
+      "usuario",
+      "exemplar",
       "data_emprestimo",
       "ativo",
     ]);
@@ -107,13 +107,14 @@ function BuscaAvancada() {
       title: "Autores",
       key: "autores",
       render: (_: unknown, livro: ILivros) =>
-        livro.autor?.map((a: any) => <Tag key={a.id}>{a.nome}</Tag>) || "—",
+        livro.autores?.map((a: any) => <Tag key={a.id}>{a.nome}</Tag>) || "—",
     },
     {
       title: "Categorias",
       key: "categorias",
       render: (_: unknown, livro: ILivros) =>
-        livro.categoria?.map((c: any) => <Tag key={c.id}>{c.nome}</Tag>) || "—",
+        livro.categorias?.map((c: any) => <Tag key={c.id}>{c.nome}</Tag>) ||
+        "—",
     },
     {
       title: "Exemplar Disponível",
@@ -148,7 +149,7 @@ function BuscaAvancada() {
       title: "Categorias",
       key: "categorias",
       render: (_: unknown, e: IEmprestimo) =>
-        e.exemplar?.livro?.categoria?.map((c: any) => (
+        e.exemplar?.livro?.categorias?.map((c: any) => (
           <Tag key={c.id}>{c.nome}</Tag>
         )) || "—",
     },
@@ -200,7 +201,7 @@ function BuscaAvancada() {
         {tipoBusca === "livros" && (
           <Row gutter={16}>
             <Col span={8}>
-              <Form.Item name="autor_id" label="Autor">
+              <Form.Item name="autores" label="Autor">
                 <Select
                   placeholder="Selecione o autor"
                   allowClear
@@ -210,7 +211,7 @@ function BuscaAvancada() {
             </Col>
 
             <Col span={8}>
-              <Form.Item name="categoria_id" label="Categoria">
+              <Form.Item name="categorias" label="Categoria">
                 <Select
                   placeholder="Selecione a categoria"
                   allowClear
@@ -243,7 +244,7 @@ function BuscaAvancada() {
           <>
             <Row gutter={16}>
               <Col span={8}>
-                <Form.Item name="livro_id" label="Livro">
+                <Form.Item name="livro" label="Livro">
                   <Select
                     placeholder="Selecione o livro"
                     allowClear
@@ -257,7 +258,7 @@ function BuscaAvancada() {
               </Col>
 
               <Col span={8}>
-                <Form.Item name="usuario_id" label="Usuário">
+                <Form.Item name="usuario" label="Usuário">
                   <Select
                     placeholder="Selecione o usuário"
                     allowClear
@@ -283,7 +284,7 @@ function BuscaAvancada() {
             <Row gutter={16}>
               {livroSelecionado && (
                 <Col span={8}>
-                  <Form.Item name="exemplar_id" label="Exemplar">
+                  <Form.Item name="exemplar" label="Exemplar">
                     <Select
                       placeholder="Selecione o exemplar"
                       allowClear

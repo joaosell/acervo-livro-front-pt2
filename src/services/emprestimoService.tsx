@@ -11,9 +11,9 @@ export const emprestimoService = {
   remove: (id: number) => api.delete(`/emprestimos/${id}`),
   devolver: (id: number) => api.patch(`/emprestimos/${id}/devolucao`, {}),
   buscarAvancado: (params: {
-    livro_id?: number;
-    usuario_id?: number;
-    exemplar_id?: number;
+    livro?: number;
+    usuario?: number;
+    exemplar?: number;
     data_inicio?: string;
     data_fim?: string;
     ativo?: boolean;

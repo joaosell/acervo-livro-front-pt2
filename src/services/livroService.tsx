@@ -21,8 +21,8 @@ export const livroService = {
   remove: (id: number) => api.delete(`/livros/${id}`),
   getAll: () => api.get("/livros"),
   buscarAvancado: (params: {
-    categoria_id?: number;
-    autor_id?: number;
+    categorias?: number;
+    autores?: number;
     onlyDisponiveis?: boolean;
   }) => api.get("/livros/busca", { params }),
 };
